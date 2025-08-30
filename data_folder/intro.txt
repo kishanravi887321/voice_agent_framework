@@ -1,0 +1,1 @@
+A healthcare chatbot is an AI-powered system designed to provide medical information and support to patients. It can answer common health queries, schedule appointments, and provide reminders for medication.
