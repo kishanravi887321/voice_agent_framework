@@ -1,7 +1,7 @@
 # claude_llm.py
 import os
 import requests
-from base import BaseLLM
+from .base import BaseLLM
 class ClaudeLLM(BaseLLM):
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY")

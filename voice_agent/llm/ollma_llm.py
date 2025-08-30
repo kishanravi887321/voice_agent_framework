@@ -1,7 +1,7 @@
 # ollama_llm.py
 import os
 import requests
-from base import BaseLLM
+from .base import BaseLLM
 class OllamaLLM(BaseLLM):
     def __init__(self, model_name: str = "gemma3", api_key: str = None):
         self.api_key = api_key or os.getenv("OLLAMA_API_KEY")

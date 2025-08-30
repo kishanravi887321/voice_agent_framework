@@ -1,7 +1,7 @@
 # openai_llm.py
 import os
 import openai
-from base import BaseLLM
+from .base import BaseLLM
 
 class OpenAILLM(BaseLLM):
     def __init__(self, api_key: str = None, model_name: str = "gpt-4"):

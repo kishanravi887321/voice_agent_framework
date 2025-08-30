@@ -1,7 +1,7 @@
 # openrouter_llm.py
 import os
 import requests
-from base import BaseLLM
+from .base import BaseLLM
 class OpenRouterLLM(BaseLLM):
     def __init__(self, api_key: str = None, model_name: str = "openrouter-model"):
         self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")

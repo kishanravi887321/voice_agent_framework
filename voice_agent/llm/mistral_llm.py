@@ -1,6 +1,6 @@
 # mistral_llm.py
 import os
-from base import BaseLLM
+from .base import BaseLLM
 import requests
 
 class MistralLLM(BaseLLM):

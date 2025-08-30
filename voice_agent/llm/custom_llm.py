@@ -1,6 +1,6 @@
 import  requests 
 
-from base import BaseLLM
+from .base import BaseLLM
 
 class CustomLLm(BaseLLM):
      """Custom model hosted anywhere with API key and URL provided by user."""

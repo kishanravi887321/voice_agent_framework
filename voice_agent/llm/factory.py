@@ -1,17 +1,17 @@
 # llm_factory.py
-from gemini_llm import GeminiLLM
-from openai_llm import OpenAILLM
-from ollma_llm import OllamaLLM
-from openrouter_service_llm import OpenRouterLLM
-from claude_llm import ClaudeLLM
-from custom_llm import CustomLLm
+from .gemini_llm import GeminiLLm
+from .openai_llm import OpenAILLM
+from .ollma_llm import OllamaLLM
+from .openrouter_service_llm import OpenRouterLLM
+from .claude_llm import ClaudeLLM
+from .custom_llm import CustomLLm
 
 class LLMFactory:
     @staticmethod
     def get_llm(llm_type: str, **kwargs):
         llm_type = llm_type.lower()
         if llm_type == "gemini":
-            return GeminiLLM(api_key=kwargs.get("api_key"))
+            return GeminiLLm(api_key=kwargs.get("api_key"))
         elif llm_type == "openai":
             return OpenAILLM(api_key=kwargs.get("api_key"), model_name=kwargs.get("model_name", "gpt-4"))
         elif llm_type == "ollama":

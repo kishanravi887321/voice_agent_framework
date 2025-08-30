@@ -67,11 +67,11 @@ class SpeechToText:
                     from dotenv import load_dotenv
                     load_dotenv()
                     import os 
-                    from voice_agent.llm.gemini_llm import GeminiClient
-                    client = GeminiClient(api_key=os.getenv("GOOGLE_API_KEY"))
-                     # now make the llm intergeration also for the data and for the 
-                    #  // swapping/ 
-                  
+                    from voice_agent.llm.gemini_llm import GeminiLLm
+                    client = GeminiLLm(api_key=os.getenv("GOOGLE_API_KEY"))
+                    # now make the llm intergeration also for the data and for the
+                    #  // swapping/
+                    answer = client.ask(transcript)
                     if answer:
                         print('answer got')
                         from voice_agent.tts.evenlabs_tts import ElevenTTS
