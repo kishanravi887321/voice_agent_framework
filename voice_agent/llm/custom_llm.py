@@ -14,3 +14,4 @@ class CustomLLm(BaseLLM):
             response = requests.post(self.model_url, json={"prompt": prompt}, headers=headers)
             response.raise_for_status()
             return response.json().get("response", "").strip()
+
