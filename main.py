@@ -2,10 +2,19 @@
 
 # stt = SpeechToText(api_key="3294cac533734554b16271ce993b897c")
 # output = stt.start()
+import os
+from voice_agent.gather.vector_read import VectoRead
+from dotenv import load_dotenv
+load_dotenv()
+vectoread = VectoRead(
+    pinecone_api_key=os.getenv("PINECONE_API_KEY"),
+    index_name=os.getenv("PINECONE_INDEX_NAME"),
+    folder_path="./data_folder",
+)
 
+# Upsert all TXT files
+vectoread.upsert_folder_to_vectordb(email="ravi@example.com")
 
-from voice_agent.gather.llama_read import LlamaRead
-
-reader=LlamaRead(api_key="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",
-                 folder_path="data_folder")
-
+# Query for relevant chunks
+chunks = vectoread.get_relevant_chunks("What is the data about this ", email="ravi@example.com")
+print(chunks)

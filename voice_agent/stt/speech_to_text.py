@@ -64,13 +64,16 @@ class SpeechToText:
                 transcript = data.get("transcript", "")
                 formatted = data.get("turn_is_formatted", False)
                 if formatted:
+                    from dotenv import load_dotenv
+                    load_dotenv()
+                    import os 
                     from voice_agent.llm.gemini_llm import GeminiClient
-                    client = GeminiClient(api_key="AIzaSyAxH3aGTKQ3qDAUL87DP_djqE8RO8PaNo0")
+                    client = GeminiClient(api_key=os.getenv("GOOGLE_API_KEY"))
                     answer = client.ask(transcript)
                     if answer:
                         print('answer got')
                         from voice_agent.tts.evenlabs_tts import ElevenTTS
-                        tts = ElevenTTS(api_key="sk_b017e5db1bbae7d56114d41be97b0048c8d029d1516c5365")
+                        tts = ElevenTTS(api_key=os.getenv("ELEVEN_API_KEY"))
                         tts.speak(answer)
                     print("Gemini says:", answer)
                     # Return live transcript
