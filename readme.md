@@ -10,7 +10,10 @@ The Voice Agent Tequity Framework is designed to create intelligent voice assist
 - Process queries using multiple LLM providers
 - Respond with natural-sounding voice using TTS
 - Store and retrieve knowledge from vector databases
-
+### 2. Install the Package
+```bash
+pip install voice-agent-tequity
+```
 ## 🏗️ Framework Architecture
 
 ```mermaid
@@ -170,10 +173,7 @@ git clone https://github.com/kishanravi887321/voice_agent_framework.git
 cd voice_agent_framework
 ```
 
-### 2. Install the Package
-```bash
-pip install voice-agent-tequity
-```
+
 
 **OR** install from source:
 ```bash
