@@ -16,5 +16,5 @@ vectoread = VectoRead(
 vectoread.upsert_folder_to_vectordb(email="ravi@example.com")
 
 # Query for relevant chunks
-chunks = vectoread.get_relevant_chunks("What is the data about this ", email="ravi@example.com")
+chunks = vectoread.get_relevant_chunks("tell me about your functionality and why I choose to use you", email="ravi@example.com")
 print(chunks)
