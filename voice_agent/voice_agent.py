@@ -10,72 +10,20 @@ from voice_agent.llm.custom_llm import CustomLLm
 
 load_dotenv()
 
-
 class VoiceAgent:
     """
-    Unified class for:
-    1. Training / querying a vector database (optional).
-    2. Selecting and using different LLMs via direct SDK interface.
+    Handles ONLY LLM selection and running prompts.
+    No vector DB operations here.
     """
 
-    def __init__(self, 
-                 llm_type: str = "openai", 
-                 folder_path: str = "./data_folder", 
-                 email: str = "user@example.com", 
-                 train: bool = False, 
-                 enable_vector_db: bool = False,
-                 **kwargs):
+    def __init__(self, llm_type: str = "openai", **kwargs):
         """
         Args:
             llm_type (str): Type of LLM (gemini, openai, ollama, openrouter, claude, custom)
-            folder_path (str): Path to TXT files for vector DB
-            email (str): Namespace key for vector DB entries
-            train (bool): Whether to trigger vector DB training at init
-            enable_vector_db (bool): Whether to enable vector database operations
-            **kwargs: Extra args passed to LLM constructors (e.g. api_key, model_name)
+            **kwargs: Extra args passed to LLM constructors (e.g. api_key, model_name, model_url)
         """
-        self.folder_path = folder_path
-        self.email = email
-        self.train = train
-        self.enable_vector_db = enable_vector_db
-
-        # Initialize vector handler only if enabled
-        self.vectoread = None
-        if self.enable_vector_db:
-            from voice_agent.gather.vector_read import VectoRead
-            self.vectoread = VectoRead(
-                pinecone_api_key=os.getenv("PINECONE_API_KEY"),
-                index_name=os.getenv("PINECONE_INDEX_NAME"),
-                folder_path=self.folder_path
-            )
-            if self.train:
-                self.train_vector_db()
-
-        # Initialize LLM
         self.llm = self._get_llm(llm_type, **kwargs)
 
-    # -------------------------
-    # Vector DB Functions
-    # -------------------------
-    def train_vector_db(self):
-        """Upsert all files from the folder to the vector DB."""
-        if not self.enable_vector_db or not self.vectoread:
-            raise RuntimeError("Vector DB is not enabled.")
-        print("[INFO] Training vector DB with files from:", self.folder_path)
-        self.vectoread.upsert_folder_to_vectordb(email=self.email)
-        print("[INFO] Training completed.")
-
-    def query_vector_db(self, query_text):
-        """Fetch relevant chunks from the vector DB."""
-        if not self.enable_vector_db or not self.vectoread:
-            raise RuntimeError("Vector DB is not enabled.")
-        print("[INFO] Querying vector DB for:", query_text)
-        chunks = self.vectoread.get_relevant_chunks(query_text, email=self.email)
-        return chunks
-
-    # -------------------------
-    # LLM Functions
-    # -------------------------
     def _get_llm(self, llm_type: str, **kwargs):
         llm_type = llm_type.lower()
         if llm_type == "gemini":
@@ -104,3 +52,34 @@ class VoiceAgent:
             raise RuntimeError("No LLM initialized.")
         print(f"[INFO] Running prompt on {self.llm.__class__.__name__}")
         return self.llm.ask(prompt, **kwargs)
+
+
+from voice_agent.gather.base import BaseVectorHandler
+
+class TrainVoiceAgent(BaseVectorHandler):
+    """
+    Handles ONLY vector DB operations.
+    Inherits from BaseVectorHandler which already has:
+      - __init__(train, folder_path, email)
+      - train_vector_db()
+      - query()
+    """
+
+    def __init__(self, train=False, folder_path="./data_folder", email="user@example.com"):
+        """
+        Args:
+            train (bool): If True, automatically upserts all TXT files at init.
+            folder_path (str): Path to folder with training data
+            email (str): Namespace for vector DB entries
+        """
+        super().__init__(train=train, folder_path=folder_path, email=email)
+
+    def insert_data(self):
+        """Explicit method for inserting data into vector DB."""
+        print("[INFO] Inserting data into vector DB...")
+        self.train_vector_db()
+
+    def retrieve_data(self, query_text: str):
+        """Explicit method for retrieving chunks from vector DB."""
+        print("[INFO] Retrieving data from vector DB...")
+        return self.query(query_text)
