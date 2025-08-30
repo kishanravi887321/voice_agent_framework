@@ -20,7 +20,7 @@ graph TB
     Speaker[🔊 Speaker] -->|Voice Response| User
     
     %% Audio Processing Layer
-    Mic -->|Audio Stream| STT[🎙️ Speech-to-Text<br/>AssemblyAI WebSocket]
+    Mic -->|Audio Stream| STT[🎙️ Speech-to-Text AssemblyAI WebSocket]
     STT -->|Transcribed Text| Router{🔀 Router}
     
     %% Processing Decision
@@ -28,7 +28,7 @@ graph TB
     Router -->|Direct Mode| LLMAgent[🧠 VoiceAgent]
     
     %% Vector Database Flow
-    VectorAgent -->|Query| VectorDB[(🗄️ Pinecone<br/>Vector Database)]
+    VectorAgent -->|Query| VectorDB[(🗄️ Pinecone Vector Database)]
     VectorDB -->|Relevant Chunks| VectorAgent
     VectorAgent -->|Context + Query| LLM_V[🤖 LLM Provider]
     
@@ -43,15 +43,15 @@ graph TB
     LLM_V & LLM_D --> Custom[⚙️ Custom LLM]
     
     %% Response Processing
-    Gemini & OpenAI & Claude & Ollama & Custom -->|Generated Response| TTS[🗣️ Text-to-Speech<br/>ElevenLabs]
+    Gemini & OpenAI & Claude & Ollama & Custom -->|Generated Response| TTS[🗣️ Text-to-Speech ElevenLabs]
     TTS -->|Audio Output| Speaker
     
     %% Data Training Flow
-    DataFolder[📁 Data Folder<br/>(.txt files)] -->|Training Data| Embedder[🔢 Sentence Transformer<br/>Embeddings]
+    DataFolder[📁 Data Folder txt files] -->|Training Data| Embedder[🔢 Sentence Transformer Embeddings]
     Embedder -->|Vector Embeddings| VectorDB
     
     %% Configuration
-    EnvFile[📄 .env File<br/>API Keys] -.->|Configuration| STT
+    EnvFile[📄 .env File API Keys] -.->|Configuration| STT
     EnvFile -.->|Configuration| LLM_V
     EnvFile -.->|Configuration| LLM_D
     EnvFile -.->|Configuration| TTS
