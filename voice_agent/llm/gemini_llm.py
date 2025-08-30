@@ -1,7 +1,7 @@
 import os
 import requests
-
-class GeminiClient:
+from base import BaseLLM
+class GeminiClient(BaseLLM):
     """
     Simple Gemini API client to ask questions based on context.
     """
