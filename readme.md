@@ -76,7 +76,12 @@ git clone https://github.com/kishanravi887321/voice_agent_framework.git
 cd voice_agent_framework
 ```
 
-### 2. Install Dependencies
+### 2. Install the Package
+```bash
+pip install voice-agent-tequity
+```
+
+**OR** install from source:
 ```bash
 pip install -r requirements.txt
 ```
@@ -85,20 +90,29 @@ pip install -r requirements.txt
 Create a `.env` file in the root directory:
 
 ```env
-# LLM API Keys
-GOOGLE_API_KEY=your_gemini_api_key
-OPENAI_API_KEY=your_openai_api_key
-ANTHROPIC_API_KEY=your_claude_api_key
+# LLM API Keys (only required for cloud-based LLMs)
+GOOGLE_API_KEY=your_gemini_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_claude_api_key_here
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 
 # TTS Service
-ELEVEN_API_KEY=your_elevenlabs_api_key
+ELEVEN_API_KEY=your_elevenlabs_api_key_here
 
-# Vector Database
-PINECONE_API_KEY=your_pinecone_api_key
-PINECONE_INDEX_NAME=your_index_name
+# Vector Database (Pinecone)
+PINECONE_API_KEY=your_pinecone_api_key_here
+PINECONE_INDEX_NAME=your_index_name_here
+PINECONE_START_URL=your_pinecone_url_here
+PINE_CONE_ENV=your_pinecone_environment_here
 
-# STT Service
-ASSEMBLYAI_API_KEY=your_assemblyai_api_key
+# STT Service (AssemblyAI)
+ASSEMBLYAI_API_KEY=your_assemblyai_api_key_here
+
+# Database (Optional)
+DB_URL=your_database_url_here
+
+# Note: Ollama (local LLM) doesn't require an API key
+# Just install Ollama locally and it will work without configuration
 ```
 
 ## 🎯 How to Use
@@ -210,21 +224,25 @@ trainer = TrainVoiceAgent(
 
 ### Supported LLM Providers
 
-| Provider | API Key Required | Local Hosting | Cost |
-|----------|------------------|---------------|------|
-| Google Gemini | ✅ | ❌ | Free tier available |
-| OpenAI GPT | ✅ | ❌ | Pay-per-use |
-| Anthropic Claude | ✅ | ❌ | Pay-per-use |
-| Ollama | ❌ | ✅ | Free (local) |
-| Custom API | ✅ | Configurable | Varies |
+| Provider | API Key Required | Local Hosting | Cost | Configuration |
+|----------|------------------|---------------|------|---------------|
+| Google Gemini | ✅ | ❌ | Free tier available | `GOOGLE_API_KEY` |
+| OpenAI GPT | ✅ | ❌ | Pay-per-use | `OPENAI_API_KEY` |
+| Anthropic Claude | ✅ | ❌ | Pay-per-use | `ANTHROPIC_API_KEY` |
+| OpenRouter | ✅ | ❌ | Pay-per-use | `OPENROUTER_API_KEY` |
+| Ollama | ❌ | ✅ | Free (local) | No API key needed |
+| Custom API | ✅ | Configurable | Varies | Custom API key |
 
 ### Getting API Keys
 
 1. **Google Gemini**: [Google AI Studio](https://makersuite.google.com/app/apikey)
 2. **OpenAI**: [OpenAI Platform](https://platform.openai.com/api-keys)
-3. **ElevenLabs**: [ElevenLabs Platform](https://elevenlabs.io/)
-4. **AssemblyAI**: [AssemblyAI Dashboard](https://www.assemblyai.com/)
-5. **Pinecone**: [Pinecone Console](https://www.pinecone.io/)
+3. **Anthropic Claude**: [Anthropic Console](https://console.anthropic.com/)
+4. **OpenRouter**: [OpenRouter Platform](https://openrouter.ai/keys)
+5. **ElevenLabs**: [ElevenLabs Platform](https://elevenlabs.io/)
+6. **AssemblyAI**: [AssemblyAI Dashboard](https://www.assemblyai.com/)
+7. **Pinecone**: [Pinecone Console](https://www.pinecone.io/)
+8. **Ollama**: [Download Ollama](https://ollama.ai/) - No API key required, runs locally
 
 ## 📊 Usage Examples
 
