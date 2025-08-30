@@ -85,4 +85,10 @@ class TrainVoiceAgent(BaseVectorHandler):
     def retrieve_data(self, query_text: str):
         """Explicit method for retrieving chunks from vector DB."""
         print("[INFO] Retrieving data from vector DB...")
+        from voice_agent.llm.gemini_llm import GeminiLLm
+        llm = GeminiLLm(api_key=os.getenv("GEMINI_API_KEY"))
+        x=llm.ask(query_text,self.query(query_text))
+        from voice_agent.tts.evenlabs_tts import ElevenTTS
+        tts = ElevenTTS(os.getenv("ELEVEN_API_KEY"))
+        tts.speak(x)
         return self.query(query_text)
