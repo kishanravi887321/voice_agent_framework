@@ -2,6 +2,10 @@
 
 A comprehensive modular voice agent framework that combines **LLM (Large Language Models)**, **STT (Speech-to-Text)**, and **TTS (Text-to-Speech)** pipelines for intelligent voice interactions.
 
+[![Documentation](https://img.shields.io/badge/📚-Documentation-blue?style=for-the-badge)](https://voice-agent-framework-tequit-docs.onrender.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/kishanravi887321/voice_agent_framework)
+[![PyPI](https://img.shields.io/badge/PyPI-Package-orange?style=for-the-badge&logo=pypi)](https://pypi.org/project/voice-agent-tequity/)
+
 ## 🌟 Overview
 
 The Voice Agent Tequity Framework is designed to create intelligent voice assistants that can:
@@ -10,13 +14,19 @@ The Voice Agent Tequity Framework is designed to create intelligent voice assist
 - Process queries using multiple LLM providers
 - Respond with natural-sounding voice using TTS
 - Store and retrieve knowledge from vector databases
-### Doccumention of the Framework
-```URL:
-https://voice-agent-framework-tequit-docs.onrender.com
-```
 
+## 📚 Framework Documentation
 
-### 2. Install the Package
+🔗 **[Complete Documentation & API Reference](https://voice-agent-framework-tequit-docs.onrender.com)**
+
+Visit our comprehensive documentation for:
+- **Detailed API Reference** - Complete class and method documentation
+- **Advanced Examples** - Real-world implementation guides
+- **Best Practices** - Performance optimization tips
+- **Troubleshooting** - Common issues and solutions
+- **Contributing Guide** - How to contribute to the framework
+
+## 🛠️ Installation & Setup
 ```bash
 pip install voice-agent-tequity
 ```
@@ -431,6 +441,7 @@ stt.start()
 - 🎤 **Testing**: Test with different use cases and provide feedback
 
 ### Community & Support
+- **📚 Documentation**: [Complete Framework Documentation](https://voice-agent-framework-tequit-docs.onrender.com)
 - **GitHub Issues**: [Report bugs or request features](https://github.com/kishanravi887321/voice_agent_framework/issues)
 - **Discussions**: Join GitHub Discussions for questions
 - **Email**: Contact [kishanravi887321@gmail.com](mailto:kishanravi887321@gmail.com)
