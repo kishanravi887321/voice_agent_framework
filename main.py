@@ -26,4 +26,8 @@ from voice_agent.llm.factory import LLMFactory
 
 llm=LLMFactory.get_llm("gemini", api_key=os.getenv("GOOGLE_API_KEY")) 
 
+# print(llm.ask("Explain the theory of relativity in simple terms."))
+
+llm=LLMFactory.get_llm("openrouter",api_key=os.getenv("OPENROUTER_API_KEY"))
+
 print(llm.ask("Explain the theory of relativity in simple terms."))

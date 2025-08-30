@@ -8,7 +8,7 @@ class OpenRouterLLM(BaseLLM):
         if not self.api_key:
             raise ValueError("OpenRouter API key is required.")
         self.model_name = model_name
-        self.url = "https://api.openrouter.ai/v1/chat/completions"
+        self.url = "https://api.openrouter.ai/v1"
 
     def ask(self, query: str, context: str = None) -> str:
         messages = [{"role": "user", "content": f"{context}\n\n{query}"}] if context else [{"role": "user", "content": query}]
