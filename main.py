@@ -10,7 +10,7 @@ agent = VoiceAgent(
     model_name="gemini-1"
 )
 
-response = agent.run_llm("Write a haiku about quantum physics.")
+response = agent.run_llm("Wrie about the mahtama gandhi ")
 print(response)
 
 
