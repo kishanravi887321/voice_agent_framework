@@ -13,9 +13,72 @@ The Voice Agent Tequity Framework is designed to create intelligent voice assist
 
 ## 🏗️ Framework Architecture
 
+```mermaid
+graph TB
+    %% User Interaction Layer
+    User[👤 User] -->|Speech| Mic[🎤 Microphone]
+    Speaker[🔊 Speaker] -->|Voice Response| User
+    
+    %% Audio Processing Layer
+    Mic -->|Audio Stream| STT[🎙️ Speech-to-Text<br/>AssemblyAI WebSocket]
+    STT -->|Transcribed Text| Router{🔀 Router}
+    
+    %% Processing Decision
+    Router -->|Vector Mode| VectorAgent[📚 TrainVoiceAgent]
+    Router -->|Direct Mode| LLMAgent[🧠 VoiceAgent]
+    
+    %% Vector Database Flow
+    VectorAgent -->|Query| VectorDB[(🗄️ Pinecone<br/>Vector Database)]
+    VectorDB -->|Relevant Chunks| VectorAgent
+    VectorAgent -->|Context + Query| LLM_V[🤖 LLM Provider]
+    
+    %% Direct LLM Flow
+    LLMAgent -->|Direct Query| LLM_D[🤖 LLM Provider]
+    
+    %% LLM Providers
+    LLM_V & LLM_D --> Gemini[🔮 Google Gemini]
+    LLM_V & LLM_D --> OpenAI[🏢 OpenAI GPT]
+    LLM_V & LLM_D --> Claude[🎭 Anthropic Claude]
+    LLM_V & LLM_D --> Ollama[💻 Ollama Local]
+    LLM_V & LLM_D --> Custom[⚙️ Custom LLM]
+    
+    %% Response Processing
+    Gemini & OpenAI & Claude & Ollama & Custom -->|Generated Response| TTS[🗣️ Text-to-Speech<br/>ElevenLabs]
+    TTS -->|Audio Output| Speaker
+    
+    %% Data Training Flow
+    DataFolder[📁 Data Folder<br/>(.txt files)] -->|Training Data| Embedder[🔢 Sentence Transformer<br/>Embeddings]
+    Embedder -->|Vector Embeddings| VectorDB
+    
+    %% Configuration
+    EnvFile[📄 .env File<br/>API Keys] -.->|Configuration| STT
+    EnvFile -.->|Configuration| LLM_V
+    EnvFile -.->|Configuration| LLM_D
+    EnvFile -.->|Configuration| TTS
+    EnvFile -.->|Configuration| VectorDB
+
+    %% Styling
+    classDef userLayer fill:#e1f5fe
+    classDef audioLayer fill:#f3e5f5
+    classDef processLayer fill:#e8f5e8
+    classDef llmLayer fill:#fff3e0
+    classDef dataLayer fill:#fce4ec
+    classDef configLayer fill:#f1f8e9
+    
+    class User,Speaker,Mic userLayer
+    class STT,TTS audioLayer
+    class Router,VectorAgent,LLMAgent processLayer
+    class Gemini,OpenAI,Claude,Ollama,Custom,LLM_V,LLM_D llmLayer
+    class VectorDB,DataFolder,Embedder dataLayer
+    class EnvFile configLayer
+```
+
 ```
 voice_agent_framework/
 ├── voice_agent/               # Core framework modules
+│   ├── __init__.py           # Package initialization
+│   ├── voice_agent.py        # 🎯 MAIN ENTRY POINT - Core VoiceAgent & TrainVoiceAgent classes
+│   ├── voice_agent2.py       # Extended voice agent with real-time STT integration
 │   ├── llm/                  # LLM providers integration
 │   │   ├── base.py           # Abstract base class for LLMs
 │   │   ├── gemini_llm.py     # Google Gemini integration
@@ -33,9 +96,40 @@ voice_agent_framework/
 │   │   └── vector_read.py    # Pinecone vector operations
 │   └── utils/                # Utility modules
 ├── data_folder/              # Training data for vector DB
-├── main.py                   # Basic usage examples
-├── main2.py                  # Real-time voice interaction demo
+├── main.py                   # Basic usage examples (note: only for demo)
+├── main2.py                  # Real-time voice interaction demo (note: only for demo)
 └── requirements.txt          # Dependencies
+```
+
+## 🎯 **Main Entry Points**
+
+The framework provides two primary classes in `voice_agent/voice_agent.py`:
+
+### 1. **VoiceAgent** - Basic LLM with TTS
+```python
+from voice_agent.voice_agent import VoiceAgent
+
+# Simple LLM interaction with automatic speech output
+agent = VoiceAgent(llm_type="gemini", api_key="your_key")
+response = agent.run_llm("Hello, how are you?")
+```
+
+### 2. **TrainVoiceAgent** - Vector Database + LLM
+```python
+from voice_agent.voice_agent import TrainVoiceAgent
+
+# Knowledge-based responses with vector search
+trainer = TrainVoiceAgent(train=True, folder_path="./data")
+response = trainer.retrieve_data("What is AI?")
+```
+
+### 3. **SpeechToText** - Real-time Voice Interaction
+```python
+from voice_agent.voice_agent2 import SpeechToText
+
+# Complete voice-to-voice interaction
+stt = SpeechToText(api_key="your_key", vector_mode=True)
+stt.start()  # Start listening and responding
 ```
 
 ## 🚀 Key Features
@@ -116,6 +210,36 @@ DB_URL=your_database_url_here
 ```
 
 ## 🎯 How to Use
+
+### Framework Flow Patterns
+
+```mermaid
+graph LR
+    %% Pattern 1: Basic LLM
+    subgraph "Pattern 1: Basic LLM Interaction"
+        A1[Text Input] --> B1[VoiceAgent] --> C1[LLM Provider] --> D1[TTS Output]
+    end
+    
+    %% Pattern 2: Voice Conversation
+    subgraph "Pattern 2: Real-time Voice Conversation"
+        A2[🎤 Speech] --> B2[STT] --> C2[LLM] --> D2[TTS] --> E2[🔊 Audio]
+    end
+    
+    %% Pattern 3: Knowledge Base
+    subgraph "Pattern 3: Vector-Enhanced Responses"
+        A3[🎤 Speech] --> B3[STT] --> C3{Vector DB} --> D3[LLM + Context] --> E3[TTS] --> F3[🔊 Audio]
+        G3[📁 Training Data] --> C3
+    end
+
+    %% Styling
+    classDef inputNode fill:#e3f2fd
+    classDef processNode fill:#f1f8e9
+    classDef outputNode fill:#fce4ec
+    
+    class A1,A2,A3,G3 inputNode
+    class B1,B2,B3,C1,C2,C3,D3 processNode
+    class D1,D2,E2,E3,F3 outputNode
+```
 
 ### Basic LLM Interaction
 ```python
