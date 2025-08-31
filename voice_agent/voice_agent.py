@@ -51,6 +51,7 @@ class VoiceAgent:
         if not self.llm:
             raise RuntimeError("No LLM initialized.")
         print(f"[INFO] Running prompt on {self.llm.__class__.__name__}")
+        print(self.llm.ask(prompt, **kwargs))
         from voice_agent.tts.evenlabs_tts import ElevenTTS
         tts = ElevenTTS(os.getenv("ELEVEN_API_KEY"))
         tts.speak(self.llm.ask(prompt, **kwargs))
