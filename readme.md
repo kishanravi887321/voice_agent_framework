@@ -76,13 +76,13 @@ graph TB
     EnvFile -.->|Configuration| TTS
     EnvFile -.->|Configuration| VectorDB
 
-    %% Styling
-    classDef userLayer fill:#e1f5fe
-    classDef audioLayer fill:#f3e5f5
-    classDef processLayer fill:#e8f5e8
-    classDef llmLayer fill:#fff3e0
-    classDef dataLayer fill:#fce4ec
-    classDef configLayer fill:#f1f8e9
+    %% Styling with dark text
+    classDef userLayer fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000
+    classDef audioLayer fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000
+    classDef processLayer fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px,color:#000
+    classDef llmLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000
+    classDef dataLayer fill:#fce4ec,stroke:#880e4f,stroke-width:2px,color:#000
+    classDef configLayer fill:#f1f8e9,stroke:#33691e,stroke-width:2px,color:#000
     
     class User,Speaker,Mic userLayer
     class STT,TTS audioLayer
