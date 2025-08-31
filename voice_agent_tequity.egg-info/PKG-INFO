@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: voice-agent-tequity
-Version: 0.1.0
+Version: 0.1.1
 Summary: A voice agent framework for LLM + STT + TTS pipelines
 Author: Ravi Kishan
 Author-email: kishanravi887321@gmail.com
